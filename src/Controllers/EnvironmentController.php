@@ -90,9 +90,7 @@ class EnvironmentController extends Controller
         $validator = Validator::make($request->all(),$rules, $messages);
 
         if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
+            return view('vendor.installer.environment-wizard', compact('envConfig'));
         }
 
         $results = $this->EnvironmentManager->saveFileWizard($request);
