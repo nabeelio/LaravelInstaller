@@ -31,12 +31,20 @@ class PermissionsChecker
     {
         foreach($folders as $folder => $permission)
         {
-            if(!($this->getPermission($folder) >= $permission))
-            {
-                $this->addFileAndSetErrors($folder, $permission, false);
-            }
-            else {
-                $this->addFile($folder, $permission, true);
+            if($permission === 'writeable') {
+                if(!is_writeable($folder)) {
+                    $this->addFileAndSetErrors($folder, $permission, false);
+                } else {
+                    $this->addFile($folder, $permission, true);
+                }
+            } else {
+                if(!($this->getPermission($folder) >= $permission))
+                {
+                    $this->addFileAndSetErrors($folder, $permission, false);
+                }
+                else {
+                    $this->addFile($folder, $permission, true);
+                }
             }
         }
 
